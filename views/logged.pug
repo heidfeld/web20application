@@ -2,15 +2,15 @@ extends menu
 
 block contentMenu
   if passport
-    p Zawartość req.session.passport:
+    p req.session.passport:
       ul
         for val, key in passport
           li #{key}: #{val}
   if log_info
-    p Zawartość res.locals.logInfo ('Logged' + req.user.username):
+    p res.locals.logInfo ('Logged' + req.user.username):
       ul: li #{log_info}
   if user
-    p Cała zawartość req.user, ważne jest to co w bazie danych (pola _id, username, password, admin)
+    p req.user
       ul
         for val, key in user
           li #{key}: #{val}

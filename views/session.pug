@@ -1,18 +1,18 @@
 extends menu
 
 block contentMenu
-  h3 ID sesji: #{idSesji}
-  h4 Locznik odwiedzin: #{odwiedziny}
-  p Zawartość req.session.cookie czyli ciasteczka:
+  h3 Session ID: #{idSesji}
+  h4 Page views: #{odwiedziny}
+  p req.session.cookie (Cookies):
     ul
       for val, key in ciasteczko
         li #{key}: #{val}
-  p Zawartość req.session.cookie.data:
+  p req.session.cookie.data:
     ul
       for val, key in data
         li #{key}: #{val}
   if passport
-    p Zawartość req.session.passport
+    p req.session.passport
       ul
         for val, key in passport
           li #{key}: #{val}
