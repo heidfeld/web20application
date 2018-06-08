@@ -37,10 +37,6 @@ module.exports = function(app) {
           console.log('Incorrect password.');
           return done(null, false, { message: 'Incorrect password.' });
         }
-        if (user.active == false) {
-          console.log('user not activated');
-          return done(null, false, { message: 'User not activated.' });
-        }
         return done(null, user);
       });
     }

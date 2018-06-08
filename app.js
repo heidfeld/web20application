@@ -11,7 +11,7 @@ var session = require('express-session');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var newUserRouter = require('./routes/newuser');
+var registerRouter = require('./routes/register');
 
 var app = express();
 
@@ -38,11 +38,11 @@ passport(app);
 app.use(function(req, res, next) {
   if(req.isAuthenticated()){
     //if user is looged in, req.isAuthenticated() will return true
-    res.locals.logInfo = `Zalogowany: ${req.user.username}`;
+    res.locals.logInfo = `logged: ${req.user.username}`;
     next();
   } else{
-    res.locals.logInfo = `Niezalogowany`;
-    if(req.url==='/newuser' || '/user/activate/:id' || req.url==='/send-email' || req.url==='/' || req.url==='/sesja' || req.url==='/login' || req.url==='/users/reset' ) {
+    res.locals.logInfo = `unlogged user`;
+    if(req.url==='/register' || '/user/activate/:id' || req.url==='/send-email' || req.url==='/' || req.url==='/session' || req.url==='/login' || req.url==='/users/reset' ) {
       next();
     } else {
       res.redirect("/login");
@@ -52,7 +52,7 @@ app.use(function(req, res, next) {
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/newuser',newUserRouter);
+app.use('/register',registerRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

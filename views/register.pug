@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  form(action="/register", method="post", class="form-signin")
+    h1(class="h5 mb-3 font-weight-normal")="Registration:"
+    label(for="inputName", class="sr-only")="username:"
+    input(type="text" name="username", id="inputName", class="form-control", placeholder="username", required, autofocus)
+    label(for="inputEmail", class="sr-only")="email:"
+    input(type="email" name="email", id="inputEmail", class="form-control", placeholder="e-mail", required)
+    label(for="inputPassword", class="sr-only")="password"
+    input(type="password", name="password", id="inputPassword", class="form-control", placeholder="password", required)
+    label(for="inputPassword2", class="sr-only")="password"
+    input(type="password", name="password2", id="inputPassword2", class="form-control", placeholder="password", required)
+    
+    input(type="submit", value="Login", class="btn btn-sm btn-primary btn-block")

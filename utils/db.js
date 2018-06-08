@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var sha1 = require('sha1');
 
-mongoose.connect('mongodb://192.168.162.199/web20spr1', function (err) {
+mongoose.connect('mongodb://localhost/web20application', function (err) {
     if (err) {
         console.log('błąd połączenia', err);
     } else {

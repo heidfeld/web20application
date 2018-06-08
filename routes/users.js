@@ -18,8 +18,6 @@ function checkAuthentication(req, res, next) {
   }
 }
 
-
-// lista wszystkich użytkowników w bazie
 router.get('/', function (req, res) {
   User.find(function (err, data) {
     if (err) return console.error(err);
@@ -28,8 +26,6 @@ router.get('/', function (req, res) {
   })
 });
 
-
-// resetowanie zawartości kolekcji użytkowników
 router.get('/reset', function (req, res, next) {
   User.remove({}, function (err) {
     if (err) return handleError(err);
@@ -37,7 +33,7 @@ router.get('/reset', function (req, res, next) {
       "username": "admin",
       "password": sha1("stud234"),
       "admin": true,
-      "email": "admin@marak89.com",
+      "email": "admin@test.pl",
       "active": true
     });
     var asdf = new User({
@@ -70,69 +66,6 @@ router.get('/reset', function (req, res, next) {
       });
     });
   });
-});
-
-router.get('/au',checkAuthentication, function (req, res) {
-  User.find(function (err, data) {
-    if (err) return console.error(err);
-    console.log(data);
-    res.render('aktywacja', {
-      users: data
-    });
-  })
-});
-
-
-router.get('/activate/:id', function (req, res) {
-  console.log('aktywuje usera: ', req.params.id);
-  let userToUpdate = req.params.id;
-
-  User.update({
-    _id: userToUpdate
-  }, {
-    active: true
-  }, function (err, result) {
-    let ans = (err === null) ?  'Uzytkownik aktywowany poprawnie': err ;
-    res.render('index', {title:'Aktywacja uzytkownika', body: ans});
-  });
-});
-
-router.get('/activation-email/:id', function (req, res) {
-  let userToUpdate = req.params.id;
-  console.log('wysyłam maila do usera: ', req.params.id);
-  User.find({
-    _id: userToUpdate
-  }, function (err, dane) {
-    console.log('znalazlem: ', dane);
-    if (err) {
-      res.json(err);
-      return console.error(err);
-    }
-    console.log('chce wyslac na email: ',dane[0].email);
-    let mailOptions = {
-      // adres nadawcy
-      from: '"Marcin Rał" <marak89@marak89.com>',
-      // lista odbiorców
-      to: dane[0].email,
-      // temat wiadomości
-      subject: 'Aktywacja konta',
-      // treść wiadomości tekstowej
-      text: 'aktywuj: https://web20spr1.m89.eu/users/activate/' + dane[0]._id,
-      // treść wiadomości w html
-      html: `<b>aktywuj: <a href="https://web20spr1.m89.eu/users/activate/` + dane[0]._id + `"> https://web20spr1.m89.eu/users/activate/` + dane[0]._id + `</a></b>
-      <p>Klikając w link akceptujesz politykę prywatności, regulami przetwarzania ciasteczek, politykę profilowania oraz inne polityki które zostaną wdrożone podczas kolejnej zmiany prawa.</p>`
-    };
-    // wysyła maila dla ustawionej warstwy transportowej dla danych opcji
-    gmailTransporter.gmailTransporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        return console.log(error);
-      }
-      console.log('Wiadomość %s wysłana: %s',
-        info.messageId, info.response);
-        res.render('index',{title:"Status wiadomości z linkiem aktywacyjnym:", body:'Wiadomość ' + info.messageId +
-        ' wysłana: ' + info.response});
-    });
-  })
 });
 
 module.exports = router;
