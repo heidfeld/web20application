@@ -46,7 +46,7 @@ router.post('/login',
   })
 );
 
-router.get('/wazne-dane', checkAuthentication, function (req, res) {
+router.get('/important', checkAuthentication, function (req, res) {
   data = {
     title: 'Secured Data',
     body: 'Congratulations you have access to very important data.'
